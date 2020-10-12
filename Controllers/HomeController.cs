@@ -60,7 +60,6 @@ namespace PlayerReplacement.Controllers
                 var UserDetails = ppp.Query("select * from PlayerLogin where Username =  @Username and PlayerPassword = @Password", model);
                 if(UserDetails.Count() == 0)
                 {
-                    model.LoginErrorMsg = "Invalid Username or Password";
                     return View("Index",model);
                 }
                 else
