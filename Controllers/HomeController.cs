@@ -90,7 +90,8 @@ namespace PlayerReplacement.Controllers
             return View();            
         }
 
-   private static string LoadConnectionstring(string id = "PlayerHelpDB")
+
+        private static string LoadConnectionstring(string id = "PlayerHelpDB")
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;
         }
