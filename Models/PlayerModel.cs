@@ -35,5 +35,6 @@ namespace PlayerHelp.Models
         public string ConfirmPassword { get; set; }
 
         public string LoginErrorMsg { get; set; }
+        public string Position { get; set; }
     }
 }
