@@ -12,10 +12,7 @@
 
 <!DOCTYPE html>
 <style>
-    .title{
-        color: red;
-        font-family: 'Times New Roman';
-    }
+
 </style>
 <html>
 <head>
@@ -25,16 +22,31 @@
 <body>
     <div>
         <center>
-            <h1 class="title">Dashboard</h1>
+            <h1>Dashboard</h1>
         </center>
-        <h2><b>Name:</b></h2>
-        <h2>Email: </h2>
+        <h2>Username: @HttpContext.Current.User.Identity.Name.Length</h2>
+        <h2>Email: @Model.EmailAddress</h2>
         <h1>Add your position</h1>
-        <h3>Position: <select id="PositionAPI"></select></h3>
+        <form method="post" action="UpdatePos">
+            <h3>Position: <select name="PlayerPosition" id="PositionAPI"></select></h3>
+            <input type="hidden" name="PlayerLoginID" value="@Model.PlayerLoginID" />
+            <input type="submit" value="Submit"  id="PositionSubmit" />
+        </form>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        @if (Model != null)
+        {
+            <script type="text/javascript">
+            $(function () {
+                alert("Inserted Customer ID:" +  @Model.PlayerLoginID);
+            });
+            </script>
+        }
         @using (Html.BeginForm("Logout", "Home", FormMethod.Post))
         {
             <a href="javascript:;" onclick="document.forms[0].submit();">Logout</a>
         }
+
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script>
@@ -49,12 +61,13 @@
                 success: function (data) {
                     //Read the value and assign to drodownlist
                     $.each(data, function (i) {
-                        
-                        $('#PositionAPI').append($('<option></option>').val(data[i].Position).html(data[i].Position));
+                        console.log(data);
+                        $('#PositionAPI').append($('<option></option>').val(data[i].PlayerPositionID).html(data[i].Position));
                     });
                 },
                 error: function (msg) { console.log(msg); }
             });
+
         });
     </script>
 </body>

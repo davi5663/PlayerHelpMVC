@@ -18,11 +18,14 @@ using System.Web.Services.Description;
 using System.Threading.Tasks;
 using System.Security.Principal;
 using Microsoft.AspNetCore.Identity;
+using System.Web;
+using System.Web.Security;
 
 namespace PlayerReplacement.Controllers
 {
     public class HomeController : Controller
     {
+        private PlayerModel playerModel = new PlayerModel();
 
         public ActionResult Index()
         {
@@ -53,26 +56,55 @@ namespace PlayerReplacement.Controllers
         }
 
         [HttpPost]
-        public ActionResult Authorise(PlayerModel model)
+        public ActionResult Authorise(PlayerModel playerModel)
         {
             using (IDbConnection ppp = new SqlConnection(LoadConnectionstring()))
             {
-                var UserDetails = ppp.Query("select * from PlayerLogin where Username =  @Username and PlayerPassword = @Password", model);
+                var UserDetails = ppp.Query("select * from PlayerLogin where Username =  @Username and PlayerPassword = @Password", playerModel);
                 if(UserDetails.Count() == 0)
                 {
-                    return View("Index",model);
+                    return View("Index", playerModel);
                 }
                 else
                 {
-                    Session["PlayerLoginID"] = model.PlayerLoginID;
-                    return View("Dashboard");
+                    foreach ( var row in UserDetails)
+                    {
+                        playerModel.EmailAddress = row.EmailAddress;
+                        playerModel.PlayerLoginID = row.PlayerLoginID;
+                        //model.Position = row.Position;
+                        playerModel.PlayerLoginID = row.PlayerLoginID;
+                    }
+                    
+                    Session["PlayerLoginID"] = playerModel.PlayerLoginID;
+                    ViewBag.PlayerLogin = playerModel;
+                    return View("Dashboard", playerModel);
                 }
             }
         }
 
+        [HttpPost]
+        public ActionResult UpdatePos(int PlayerLoginID, string PlayerPosition)
+        {
+            //string constr = ConfigurationManager.ConnectionStrings["Constring"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(LoadConnectionstring()))
+            {
+                //string query = "INSERT INTO PlayerLogin (Position) VALUES (@Position)";
+                //query += "SELECT SCOPE_IDENTITY()";
+                string query = "UPDATE PlayerLogin SET Position = @Position WHERE PlayerLoginID = @PlayerLoginID";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Position", PlayerPosition);
+                    cmd.Parameters.AddWithValue("@PlayerLoginID", PlayerLoginID);
+                    cmd.Connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                return View("Dashboard", playerModel);
+            }
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public ActionResult PlayerRegistration(PlayerModel model)
         {
 
