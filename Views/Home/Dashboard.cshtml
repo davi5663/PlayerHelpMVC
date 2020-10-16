@@ -24,7 +24,7 @@
         <center>
             <h1>Dashboard</h1>
         </center>
-        <h2>Username: @HttpContext.Current.User.Identity.Name.Length</h2>
+        <h2>Username: @Model.Username</h2>
         <h2>Email: @Model.EmailAddress</h2>
         <h1>Add your position</h1>
         <form method="post" action="UpdatePos">
@@ -38,7 +38,7 @@
         {
             <script type="text/javascript">
             $(function () {
-                alert("Inserted Customer ID:" +  @Model.PlayerLoginID);
+                alert("Inserted Player Position:" +  @Model.PlayerLoginID);
             });
             </script>
         }
