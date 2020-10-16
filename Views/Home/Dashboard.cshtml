@@ -36,11 +36,11 @@
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         @if (Model != null)
         {
-            <script type="text/javascript">
+            @*<script type="text/javascript">
             $(function () {
                 alert("Inserted Player Position:" +  @Model.PlayerLoginID);
             });
-            </script>
+            </script>*@
         }
         @using (Html.BeginForm("Logout", "Home", FormMethod.Post))
         {

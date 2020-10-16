@@ -7,7 +7,6 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -25,7 +24,7 @@
                     <li>@Html.ActionLink("Register", "PlayerRegistration", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                    <li style="font-weight:bold; background: green;">@Html.ActionLink("Login", "Login", "Home")</li>
                 </ul>
             </div>
         </div>
