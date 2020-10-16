@@ -24,7 +24,7 @@
         <center>
             <h1>Dashboard</h1>
         </center>
-        <h2>Username: @Model.Username</h2>
+        <h2>Username: @Model.Username</h2> <!--Prints out username with the help of our model that we included at the start of the page-->
         <h2>Email: @Model.EmailAddress</h2>
         <h1>Add your position</h1>
         <form method="post" action="UpdatePos">
@@ -53,7 +53,7 @@
         $(document).ready(function () {
             var testDdl = $('#PositionAPI');
             $.ajax({
-                //change your webapi path here
+                //WebApi path
                 url: "https://localhost:44388/api/Position",
                 type: "get",
                 contentType: "application/json;charset=utf-8",
@@ -63,7 +63,7 @@
                     $.each(data, function (i) {
                         console.log(data);
                         $('#PositionAPI').append($('<option></option>').val(data[i].PlayerPositionID).html(data[i].Position));
-                    });
+                    }); //PlayerPositionID helps us get the numbers for the position. But when you are in the Dashboard you can see the positions as words.
                 },
                 error: function (msg) { console.log(msg); }
             });
