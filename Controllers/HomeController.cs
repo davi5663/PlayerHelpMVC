@@ -27,6 +27,7 @@ namespace PlayerReplacement.Controllers
     {
         private PlayerModel playerModel = new PlayerModel();
 
+
         public ActionResult Index()
         {
             return View();
@@ -63,7 +64,8 @@ namespace PlayerReplacement.Controllers
                 var UserDetails = ppp.Query("select * from PlayerLogin where Username =  @Username and PlayerPassword = @Password", playerModel);
                 if(UserDetails.Count() == 0)
                 {
-                    return View("Index", playerModel);
+                    TempData["Message"] = "Username or Password is incorrect!";
+                    return View("Login", playerModel);
                 }
                 else
                 {
@@ -74,7 +76,7 @@ namespace PlayerReplacement.Controllers
                         //model.Position = row.Position;
                         playerModel.PlayerLoginID = row.PlayerLoginID;
                     }
-                    
+
                     Session["PlayerLoginID"] = playerModel.PlayerLoginID;
                     ViewBag.PlayerLogin = playerModel;
                     return View("Dashboard", playerModel);
@@ -98,6 +100,7 @@ namespace PlayerReplacement.Controllers
                     cmd.Connection.Open();
                     cmd.ExecuteNonQuery();
                 }
+                ViewData["Updated"] = "Position has been updated to " + PlayerPosition;
                 return View("Dashboard", playerModel);
             }
         }
@@ -118,7 +121,6 @@ namespace PlayerReplacement.Controllers
             {
                 cnn.Execute("insert into PlayerLogin (PlayerLoginID, Username, Email, PlayerPassword ) values (@PlayerLoginID, @Username, @EmailAddress, @PlayerPassword)", model);
             }
-
             return View();            
         }
 
@@ -130,8 +132,10 @@ namespace PlayerReplacement.Controllers
 
         public ActionResult Logout()
         {
-            Session.Abandon();
-            return RedirectToAction("Index");
+            //Session.Abandon();
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
+
         }
     }
 }

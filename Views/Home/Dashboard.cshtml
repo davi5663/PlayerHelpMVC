@@ -30,21 +30,22 @@
         <form method="post" action="UpdatePos">
             <h3>Position: <select name="PlayerPosition" id="PositionAPI"></select></h3>
             <input type="hidden" name="PlayerLoginID" value="@Model.PlayerLoginID" />
-            <input type="submit" value="Submit"  id="PositionSubmit" />
+            <input type="submit" value="Submit" id="PositionSubmit"/>
+            @ViewData["Updated"]
         </form>
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         @if (Model != null)
         {
             @*<script type="text/javascript">
-            $(function () {
-                alert("Inserted Player Position:" +  @Model.PlayerLoginID);
-            });
-            </script>*@
+                $(function () {
+                    alert("Inserted Player Position:" +  @Model.PlayerLoginID);
+                });
+                </script>*@
         }
         @using (Html.BeginForm("Logout", "Home", FormMethod.Post))
         {
-            <a href="javascript:;" onclick="document.forms[0].submit();">Logout</a>
+            <a href="javascript:;" onclick="document.forms[1].submit();">Logout</a>
         }
 
     </div>
