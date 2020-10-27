@@ -20,6 +20,7 @@ using System.Security.Principal;
 using Microsoft.AspNetCore.Identity;
 using System.Web;
 using System.Web.Security;
+using PlayerHelpMVC.Models;
 
 namespace PlayerReplacement.Controllers
 {
@@ -56,6 +57,12 @@ namespace PlayerReplacement.Controllers
             return View();
         }
 
+        public ActionResult AdminLogin()
+        {
+            ViewBag.Title = "AdminLogin";
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Authorise(PlayerModel playerModel)
         {
@@ -80,6 +87,51 @@ namespace PlayerReplacement.Controllers
                     Session["PlayerLoginID"] = playerModel.PlayerLoginID;
                     ViewBag.PlayerLogin = playerModel;
                     return View("Dashboard", playerModel);
+                }
+            }
+        }
+
+        public ActionResult Players(PlayerModel playerModel)
+        {
+            using (SqlConnection conn = new SqlConnection(LoadConnectionstring()))
+            {
+                string ConnectionString = "Data Source=DESKTOP-9TLF5A1;Initial Catalog=PlayerHelpDB;Integrated Security=True";
+                string sql = "SELECT Username, Position FROM PlayerLogin";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+                var model = new List<PlayerModel>();
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                {
+                    connection.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        var players = new PlayerModel();
+                        players.Username = rdr["Username"].ToString();
+                        players.Position = rdr["Position"].ToString();
+
+                        model.Add(players);
+                    }
+                }
+                return View(model);
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult AdminAuthorise(AdminModel adminModel)
+        {
+            using(IDbConnection aaa = new SqlConnection(LoadConnectionstring()))
+            {
+                var AdminDetails = aaa.Query("SELECT * FROM AdminUser where AdminUsername = @AdminUsername and AdminPassword = @AdminPassword",adminModel);
+                if(AdminDetails.Count() == 0)
+                {
+                    TempData["AdminMessage"] = "Username or Password is incorrect!";
+                    return View("AdminLogin", adminModel);
+                }
+                else
+                {
+                    return View("AdminDashboard", adminModel);
                 }
             }
         }

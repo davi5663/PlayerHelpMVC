@@ -1,0 +1,52 @@
+﻿@*@model PlayerHelpMVC.Models.AdminModel*@
+@model Tuple<PlayerHelpMVC.Models.AdminModel, List<PlayerHelp.Models.PlayerModel>>
+@{
+
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<body>
+    <div>
+        <center>
+            <h1>Admin Dashboard</h1>
+        </center>
+        @*<h2>Username:@Model.AdminUsername</h2>*@
+        <h2>Usernamwe: @Model.Item1.AdminUsername</h2>
+    </div>
+    @using (Html.BeginForm("Logout", "Home", FormMethod.Post))
+    {
+        <a href="javascript:;" onclick="document.forms[0].submit();">Logout</a>
+    }
+
+
+
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Position</th>
+    </tr>
+    @foreach (var players in Model.Item2)
+    {
+        <tr>
+            <td>@players.Username</td>
+            <td>@players.Position</td>
+        </tr>
+
+    }
+
+</table>
+
+
+</body>
+</html>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src='@Url.Content("~/Scripts/jquery-1.8.2.js")' type='text/javascript'></script>
+    <script src='@Url.Content("~/Scripts/jquery.validate.js")' type='text/javascript'></script>
+    <script src='@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")' type='text/javascript'></script>
+}
+

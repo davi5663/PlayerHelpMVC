@@ -1,0 +1,80 @@
+﻿@model PlayerHelpMVC.Models.AdminModel
+@{
+    ViewBag.Title = "AdminLogin";
+}
+
+<h2>AdminLogin</h2>
+
+<style>
+    #login-div {
+        margin-left: 35%;
+        padding: 10px;
+    }
+    .field-validation-error{
+        color: red;
+    }
+    .td-title{
+        font-size: 20px;
+        letter-spacing: 2px;
+        text-align: center;
+
+    }
+    .td-username{
+        letter-spacing: 1px;
+    }
+    .td-password{
+        letter-spacing: 1px;
+    }
+</style>
+
+<div id="login-div">
+    @using (Html.BeginForm("AdminAuthorise", "", FormMethod.Post))
+    {
+        <table>
+            <tr>
+                <td></td>
+                <td class="td-title">Login</td>
+            </tr>
+            <tr>
+                <td class="td-username">@Html.LabelFor(model => model.AdminUsername)</td>
+                <td>@Html.EditorFor(model => model.AdminUsername)</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>@Html.ValidationMessageFor(model => model.AdminUsername)</td>
+            </tr>
+            <tr>
+                <td class="td-password">@Html.LabelFor(model => model.AdminPassword)</td>
+                <td>@Html.EditorFor(model => model.AdminPassword)</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>@Html.ValidationMessageFor(model => model.AdminPassword)</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label class="field-validation-error">@TempData["AdminMessage"]</label>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <center>
+                        <input type="submit" value="Login" />
+                        <input type="reset" value="Clear" />
+                    </center>
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src='@Url.Content("~/Scripts/jquery-1.8.2.js")' type='text/javascript'></script>
+    <script src='@Url.Content("~/Scripts/jquery.validate.js")' type='text/javascript'></script>
+    <script src='@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")' type='text/javascript'></script>
+}
+
