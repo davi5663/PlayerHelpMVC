@@ -8,6 +8,14 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <style>
+        #right-align{
+            font-weight: bold;
+        }
+        #left-align{
+            font-weight: bold;
+        }
+    </style>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -19,13 +27,17 @@
                 @Html.ActionLink("PlayerHelp", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" id="left-align">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Register", "PlayerRegistration", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li style="font-weight:bold; background: green;">@Html.ActionLink("Login", "Login", "Home")</li>
-                    <li style="font-weight:bold; background: red;">@Html.ActionLink("AdminLogin", "AdminLogin", "Home")</li>
+                    @*<li style="font-weight:bold; background: green;">@Html.ActionLink("Login", "Login", "Home")</li>
+                    <li style="font-weight:bold; background: red;">@Html.ActionLink("AdminLogin", "AdminLogin", "Home")</li>*@
+                </ul>
+                <ul class="nav navbar-nav navbar-right" id="right-align">
+                    <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                    <li>@Html.ActionLink("AdminLogin", "AdminLogin", "Home")</li>
                 </ul>
             </div>
         </div>

@@ -60,6 +60,7 @@ namespace PlayerReplacement.Controllers
         public ActionResult AdminLogin()
         {
             ViewBag.Title = "AdminLogin";
+
             return View();
         }
 

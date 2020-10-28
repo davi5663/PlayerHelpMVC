@@ -12,35 +12,29 @@
         <center>
             <h1>Admin Dashboard</h1>
         </center>
-        <h2>Username:@Model.AdminUsername</h2>
+        <h2>Username: @Model.AdminUsername</h2>
         @*<h2>Username: @Model.Item1.AdminUsername</h2>*@
     </div>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Position</th>
+        </tr>
+
+
+        @foreach (var players in ViewBag.Players)
+        {
+            <tr>
+                <td>@players.Username</td>
+                <td>@players.Position</td>
+            </tr>
+
+        }
+    </table>
     @using (Html.BeginForm("Logout", "Home", FormMethod.Post))
     {
         <a href="javascript:;" onclick="document.forms[0].submit();">Logout</a>
     }
-
-
-<p>
-
-</p>
-<table>
-    <tr>
-        <th>Username</th>
-        <th>Position</th>
-    </tr>
-    
-
-    @foreach (var players in ViewBag.Players)
-    {
-        <tr>
-            <td>@players.Username</td>
-            <td>@players.Position</td>
-        </tr>
-
-    }
-
-</table>
 
 
 </body>
