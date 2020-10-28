@@ -91,19 +91,18 @@ namespace PlayerReplacement.Controllers
             }
         }
 
-        public ActionResult Players(PlayerModel playerModel)
+        //public ActionResult Players(PlayerModel playerModel)
+        private void GetPlayers()
         {
             using (SqlConnection conn = new SqlConnection(LoadConnectionstring()))
             {
-                string ConnectionString = "Data Source=DESKTOP-9TLF5A1;Initial Catalog=PlayerHelpDB;Integrated Security=True";
                 string sql = "SELECT Username, Position FROM PlayerLogin";
-                SqlCommand cmd = new SqlCommand(sql, conn);
 
                 var model = new List<PlayerModel>();
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
-                {
-                    connection.Open();
-                    SqlDataReader rdr = cmd.ExecuteReader();
+
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
                         var players = new PlayerModel();
@@ -112,8 +111,7 @@ namespace PlayerReplacement.Controllers
 
                         model.Add(players);
                     }
-                }
-                return View(model);
+                ViewBag.Players = model;
             }
         }
 
@@ -131,6 +129,7 @@ namespace PlayerReplacement.Controllers
                 }
                 else
                 {
+                    GetPlayers();
                     return View("AdminDashboard", adminModel);
                 }
             }

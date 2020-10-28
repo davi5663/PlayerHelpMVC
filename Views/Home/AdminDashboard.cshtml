@@ -1,5 +1,5 @@
-﻿@*@model PlayerHelpMVC.Models.AdminModel*@
-@model Tuple<PlayerHelpMVC.Models.AdminModel, List<PlayerHelp.Models.PlayerModel>>
+﻿@model PlayerHelpMVC.Models.AdminModel
+@*@model Tuple<PlayerHelpMVC.Models.AdminModel, PlayerHelp.Models.PlayerModel>*@
 @{
 
     Layout = null;
@@ -12,8 +12,8 @@
         <center>
             <h1>Admin Dashboard</h1>
         </center>
-        @*<h2>Username:@Model.AdminUsername</h2>*@
-        <h2>Usernamwe: @Model.Item1.AdminUsername</h2>
+        <h2>Username:@Model.AdminUsername</h2>
+        @*<h2>Username: @Model.Item1.AdminUsername</h2>*@
     </div>
     @using (Html.BeginForm("Logout", "Home", FormMethod.Post))
     {
@@ -21,13 +21,17 @@
     }
 
 
+<p>
 
+</p>
 <table>
     <tr>
         <th>Username</th>
         <th>Position</th>
     </tr>
-    @foreach (var players in Model.Item2)
+    
+
+    @foreach (var players in ViewBag.Players)
     {
         <tr>
             <td>@players.Username</td>
