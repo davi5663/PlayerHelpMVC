@@ -21,14 +21,14 @@ namespace PlayerHelp.BusisnessLogic
                 Password = Password
             };
 
-            string sql = "insert into dbo.PlayerLogin (PlayerLoginID, Username, Email, PlayerPassword) values " +
+            string sql = "insert into dbo.PlayerLogin (PlayerLoginID, Username, EmailAddress, PlayerPassword) values " +
                 "(@PlayerLoginID, @Username, @EmailAddress, @Password);";
 
             return SQLDataAccess.SaveData(sql, data);
         }
         public static List<PlayerModel> LoadPlayers()
         {
-            string sql = @"select PlayerLoginID, Username, Email, Password, from dbo.PlayerLogin;";
+            string sql = @"select PlayerLoginID, Username, EmailAddress, Password, from dbo.PlayerLogin;";
 
             return SQLDataAccess.LoadData<PlayerModel>(sql);
         }

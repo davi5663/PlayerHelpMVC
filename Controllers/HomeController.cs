@@ -170,8 +170,9 @@ namespace PlayerReplacement.Controllers
 
             using (IDbConnection cnn = new SqlConnection(LoadConnectionstring()))
             {
-                cnn.Execute("insert into PlayerLogin (PlayerLoginID, Username, Email, PlayerPassword ) values (@PlayerLoginID, @Username, @EmailAddress, @PlayerPassword)", model);
+                cnn.Execute("insert into PlayerLogin (PlayerLoginID, Username, EmailAddress, PlayerPassword ) values (@PlayerLoginID, @Username, @EmailAddress, @PlayerPassword)", model);
             }
+            TempData["Registration"] = "You have successfully registered ";
             return View();            
         }
 
