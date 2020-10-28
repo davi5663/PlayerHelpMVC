@@ -93,7 +93,7 @@ namespace PlayerReplacement.Controllers
         }
 
         //public ActionResult Players(PlayerModel playerModel)
-        private void GetPlayers()
+        private void GetPlayers() //Created a void for storing my model inside a ViewBag which I call in my AdminDashboard
         {
             using (SqlConnection conn = new SqlConnection(LoadConnectionstring()))
             {
@@ -102,15 +102,15 @@ namespace PlayerReplacement.Controllers
                 var model = new List<PlayerModel>();
 
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                SqlDataReader rdr = cmd.ExecuteReader();
-                    while (rdr.Read())
+                SqlCommand cmd = new SqlCommand(sql, conn); //SqlCommand -> Reads a forward-only stream of rows from an SQL Database
+                SqlDataReader rdr = cmd.ExecuteReader(); //ExecuteReader -> Sends the CommandText (Get's or Set's the SQL statement) to the Connection and builds the SqlDataReader
+                while (rdr.Read())
                     {
                         var players = new PlayerModel();
-                        players.Username = rdr["Username"].ToString();
+                        players.Username = rdr["Username"].ToString(); //Convert the Username and Position to String so it can be read
                         players.Position = rdr["Position"].ToString();
 
-                        model.Add(players);
+                        model.Add(players); //The model adds the players
                     }
                 ViewBag.Players = model;
             }
@@ -147,10 +147,10 @@ namespace PlayerReplacement.Controllers
                 string query = "UPDATE PlayerLogin SET Position = @Position WHERE PlayerLoginID = @PlayerLoginID";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@Position", PlayerPosition);
+                    cmd.Parameters.AddWithValue("@Position", PlayerPosition); //Adds Parameters at the end of the SQLParameterCollection (Represents a collection of parameters)
                     cmd.Parameters.AddWithValue("@PlayerLoginID", PlayerLoginID);
                     cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery(); //Executes an SQL statement and returns a number of row affected
                 }
                 ViewData["Updated"] = "Position has been updated to " + PlayerPosition;
                 return View("Dashboard", playerModel);
