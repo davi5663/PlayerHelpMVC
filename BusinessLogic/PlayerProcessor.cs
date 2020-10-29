@@ -13,7 +13,7 @@ namespace PlayerHelp.BusisnessLogic
     {
         public static int CreatePlayer(int PlayerID, string Username, string emailAddress, string Password)
         {
-            PlayerModel data = new PlayerModel
+            PlayerModel data = new PlayerModel 
             {
                 PlayerLoginID = PlayerID,
                 Username = Username,
@@ -22,7 +22,7 @@ namespace PlayerHelp.BusisnessLogic
             };
 
             string sql = "insert into dbo.PlayerLogin (PlayerLoginID, Username, EmailAddress, PlayerPassword) values " +
-                "(@PlayerLoginID, @Username, @EmailAddress, @Password);";
+                "(@PlayerLoginID, @Username, @EmailAddress, @Password);"; //The @ data is from the databasea and the other ones is what  you can't to call them.
 
             return SQLDataAccess.SaveData(sql, data);
         }

@@ -97,7 +97,8 @@ namespace PlayerReplacement.Controllers
         {
             using (SqlConnection conn = new SqlConnection(LoadConnectionstring()))
             {
-                string sql = "SELECT Username, Position FROM PlayerLogin";
+                string sql = "SELECT PlayerLoginID, Username, Position FROM PlayerLogin";
+
 
                 var model = new List<PlayerModel>();
 
@@ -107,6 +108,7 @@ namespace PlayerReplacement.Controllers
                 while (rdr.Read())
                     {
                         var players = new PlayerModel();
+                        players.PlayerLoginID = Int32.Parse(rdr["PlayerLoginID"].ToString()); //Converting ID to Int and then String so the website can read it
                         players.Username = rdr["Username"].ToString(); //Convert the Username and Position to String so it can be read
                         players.Position = rdr["Position"].ToString();
 
@@ -130,7 +132,7 @@ namespace PlayerReplacement.Controllers
                 }
                 else
                 {
-                    GetPlayers();
+                    GetPlayers(); //Passes the GetPlayers void which loads the players when you log into the AdminDashboard
                     return View("AdminDashboard", adminModel);
                 }
             }
@@ -158,7 +160,7 @@ namespace PlayerReplacement.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] //Writes an Unique value that prevents CORS (Cross Site Requests Forgeries) attacks
         
         public ActionResult PlayerRegistration(PlayerModel model)
         {

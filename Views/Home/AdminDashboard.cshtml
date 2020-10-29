@@ -2,7 +2,7 @@
 @*@model Tuple<PlayerHelpMVC.Models.AdminModel, PlayerHelp.Models.PlayerModel>*@
 @{
 
-    Layout = null;
+    Layout = null; //Layout = null means that the page does not have a specific layout
 }
 
 <!DOCTYPE html>
@@ -17,6 +17,7 @@
     </div>
     <table>
         <tr>
+            <th>Player ID</th>
             <th>Username</th>
             <th>Position</th>
         </tr>
@@ -25,6 +26,7 @@
         @foreach (var players in ViewBag.Players) //Here is where I call my ViewBag from the HomeController
         {
             <tr>
+                <td>@players.PlayerLoginID</td>
                 <td>@players.Username</td>
                 <td>@players.Position</td>
             </tr>
