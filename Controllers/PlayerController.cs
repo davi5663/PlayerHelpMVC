@@ -25,7 +25,7 @@ namespace PlayerHelp
         {
             using (IDbConnection cnn = new SqlConnection(LoadConnectionString()))
             {
-                cnn.Execute("insert into PlayerLogin (Username, EmailAddress, PlayerPassword) values (@Username, @EmailAddress, @PlayerPassword)", player);
+                cnn.Execute("insert into PlayerLogin (Username, Email, PlayerPassword) values (@Username, @Email, @PlayerPassword)", player);
             }
         }
         private static string LoadConnectionString(string id = "PlayerHelpDB") //Find the Default inside Web.config, if you find it return the ConnectionString value
